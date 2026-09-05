@@ -1,0 +1,99 @@
+.footer {
+  background: linear-gradient(180deg, var(--navy-900), #04102a);
+  color: #a9b8d6;
+  padding-top: 76px;
+  position: relative;
+  overflow: hidden;
+}
+.footer .bg-blob { opacity: 0.22; }
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* .footer__brand .logo { color: #fff; margin-bottom: 18px; } */
+.footerlogo{
+  margin-top: -50px;
+  /* margin-right: 50px; */
+}
+.footer__desc {
+  font-size: 0.92rem;
+  color: #94a6c9;
+  max-width: 320px;
+  margin-top: -50px;  
+}
+.footer__social {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+.footer__social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cdd9ef;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+.footer__social a:hover {
+  background: var(--royal-600);
+  color: #fff;
+  transform: translateY(-3px);
+}
+.footer__social svg { width: 18px; height: 18px; }
+
+.footer__col h4 {
+  color: #fff;
+  font-size: 0.98rem;
+  margin-bottom: 18px;
+  letter-spacing: -0.01em;
+}
+.footer__col ul { display: flex; flex-direction: column; gap: 11px; }
+.footer__col a {
+  color: #9db0d2;
+  font-size: 0.9rem;
+  transition: color 0.18s ease, padding-left 0.18s ease;
+}
+.footer__col a:hover { color: #fff; padding-left: 4px; }
+
+.footer__contact li {
+  display: flex;
+  gap: 11px;
+  font-size: 0.9rem;
+  margin-bottom: 13px;
+  color: #9db0d2;
+}
+.footer__contact svg { width: 17px; height: 17px; color: var(--royal-500); flex-shrink: 0; margin-top: 3px; }
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 26px 0 34px;
+  font-size: 0.84rem;
+  color: #8093b6;
+}
+.footer__bottom nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer__bottom a { color: #8093b6; }
+.footer__bottom a:hover { color: #fff; }
+
+.footer__disclaimer {
+  padding: 20px 0 40px;
+  font-size: 0.78rem;
+  color: #6f82a6;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  line-height: 1.7;
+}

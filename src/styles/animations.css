@@ -1,0 +1,470 @@
+/* ==========================================================================
+   Motion layer — keyframes + helper classes for the animation toolkit.
+   Component-level animations live in framer-motion; this file covers
+   ambient / decorative effects and the bits that are cheaper in CSS.
+   ========================================================================== */
+
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--royal-600), var(--gold-500));
+  z-index: 1500;
+  pointer-events: none;
+}
+
+/* ---------- Particle field canvas ---------- */
+.particle-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---------- Animated wave divider ---------- */
+.wave-divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.wave-divider svg { display: block; width: 140%; }
+
+/* ---------- Marquee ---------- */
+.marquee { overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee__track { display: flex; width: max-content; }
+.marquee__group { display: flex; align-items: center; padding-right: 40px; }
+.marquee--static .marquee__group { flex-wrap: wrap; justify-content: center; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* ---------- Ambient keyframes ---------- */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  70% { transform: scale(1.8); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes shimmer {
+  100% { transform: translateX(220%); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* ---------- Helper classes ---------- */
+.anim-float { animation: float-y 5s ease-in-out infinite; }
+
+.anim-gradient-text {
+  background: linear-gradient(120deg, var(--royal-600), var(--gold-500), var(--navy-700), var(--royal-600));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 8s ease infinite;
+}
+
+/* Sheen sweep on hover — add .has-sheen to a positioned, overflow-hidden el */
+.has-sheen { position: relative; overflow: hidden; }
+.has-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: translateX(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.has-sheen:hover::after { opacity: 1; animation: shimmer 0.9s ease; }
+
+/* Animated dashed connector for the "how it works" rail */
+.steps::before { background-size: 200% 100%; animation: gradient-pan 6s linear infinite; }
+
+/* Pulsing halo for floating action buttons.
+   The host element must already establish a positioning context
+   (both current users — .wa-btn and .back-to-top — are position: fixed).
+   Do NOT set `position` here: it would override the host's fixed/sticky. */
+.pulse-fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  z-index: -1;
+  animation: pulse-ring 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Twinkling star layer for dark heroes */
+.starfield {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 70% 65%, #fff, transparent),
+    radial-gradient(1px 1px at 45% 15%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 40%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 33% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 60% 90%, #fff, transparent);
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+/* ---------- Component glue for the motion toolkit ---------- */
+
+/* Section heading animated title keeps its rhythm */
+.section-head__title { margin-top: 16px; }
+
+/* Room for the wave divider at the bottom of inner-page heroes */
+.page-hero { padding-bottom: 116px; }
+.wave-divider svg path { will-change: transform; }
+
+/* Hero visual wrapper (parallax host) */
+.hero__visual-wrap { position: relative; z-index: 1; }
+.hero { position: relative; }
+
+/* Tilt cards: let framer own the transform, keep CSS for the rest */
+.motion-tilt {
+  transition: box-shadow 0.22s ease, border-color 0.22s ease !important;
+  transform-style: preserve-3d;
+}
+.motion-tilt > * { transform: translateZ(0.01px); }
+
+/* FAQ icon is animated by framer now — drop the old CSS rotate */
+.faq__q svg { transform: none !important; transition: none !important; }
+
+/* Marquee items must not squeeze */
+.marquee__group > * { flex-shrink: 0; }
+.countries-bar { width: 100%; }
+
+/* Back-to-top progress ring */
+.back-to-top { overflow: visible; }
+.back-to-top__ring {
+  position: absolute;
+  inset: -3px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  pointer-events: none;
+}
+
+/* WhatsApp FAB pulse uses the brand green, not currentColor */
+.wa-btn.pulse-fab::before { background: #25d366; opacity: 0.6; }
+
+/* 404 badge */
+.notfound__badge {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 8px;
+  border-radius: 26px;
+  display: grid;
+  place-items: center;
+  color: var(--royal-600);
+  background: linear-gradient(135deg, var(--royal-100), #fff);
+  border: 1px solid var(--royal-100);
+  box-shadow: var(--shadow);
+}
+.notfound { position: relative; }
+
+/* Scroll progress sits just under any sticky header visually */
+.scroll-progress { top: 0; }
+
+/* ---------- Cursor spotlight (site-wide) ---------- */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 460px;
+  height: 460px;
+  margin: -230px 0 0 -230px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1400;
+  background: radial-gradient(circle, rgba(47, 107, 255, 0.09), rgba(47, 107, 255, 0) 62%);
+  will-change: transform;
+}
+
+/* ---------- Global scroll-reveal (section-level, .sr / .sr-in) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .sr {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .sr.sr-in {
+    opacity: 1;
+    transform: none;
+  }
+  /* Prose paragraphs rise a shorter distance — they're smaller blocks */
+  .prose > .sr {
+    transform: translate3d(0, 16px, 0);
+  }
+  .prose > .sr.sr-in { transform: none; }
+}
+
+/* ---------- Cursor trail ---------- */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: var(--royal-600);
+  pointer-events: none;
+  z-index: 1399;
+  will-change: transform;
+}
+
+/* ---------- Typewriter ---------- */
+.hero__ticker {
+  margin-top: 14px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--royal-600);
+  min-height: 1.4em;
+}
+.tw-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.16em;
+  background: currentColor;
+  animation: tw-blink 1s steps(1) infinite;
+}
+@keyframes tw-blink { 50% { opacity: 0; } }
+
+/* ---------- Glitch text ---------- */
+.glitch { position: relative; display: inline-block; }
+.glitch__base { position: relative; z-index: 2; }
+.glitch__layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.glitch__layer--r { color: #ff2e88; mix-blend-mode: screen; }
+.glitch__layer--c { color: #22d3ee; mix-blend-mode: screen; }
+.section--navy .glitch__layer--r,
+.page .glitch__layer--r { color: #ff3b6b; }
+
+/* ---------- Tooltip ---------- */
+.tooltip {
+  z-index: 60;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--navy-800);
+  color: #fff;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow);
+  pointer-events: none;
+}
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(6, 20, 49, 0.55);
+  backdrop-filter: blur(4px);
+}
+.modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 88vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  outline: none;
+}
+.modal--lg { max-width: 760px; }
+.modal--sm { max-width: 420px; }
+.modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 0;
+}
+.modal__head h3 { font-size: 1.2rem; }
+.modal__close {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: var(--navy-800);
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+.modal__close:hover { background: var(--surface); }
+.modal__body { padding: 18px 24px 26px; }
+
+/* ---------- Skeleton / shimmer ---------- */
+.skeleton {
+  display: block;
+  background: linear-gradient(100deg, var(--surface-2) 20%, #dbe4f3 40%, var(--surface-2) 60%);
+  background-size: 220% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.skeleton--fill { position: absolute; inset: 0; z-index: 0; }
+@keyframes skeleton-shimmer {
+  0% { background-position: 180% 0; }
+  100% { background-position: -80% 0; }
+}
+.smart-img img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- WebGL globe ---------- */
+.three-globe { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.three-globe canvas { width: 100% !important; height: 100% !important; }
+.hero__globe { z-index: 1; opacity: 0.9; mix-blend-mode: screen; }
+.page-hero__globe { opacity: 0.55; z-index: 0; }
+
+/* ---------- Horizontal scroll section ---------- */
+/* Height is set inline from the measured content width; this is the pre-JS fallback. */
+.hscroll { position: relative; min-height: 100vh; }
+.hscroll__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hscroll__track {
+  display: flex;
+  gap: 28px;
+  padding: 0 6vw;
+  will-change: transform;
+}
+.hscroll--static { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 8px 0 20px; }
+.hscroll--static .hscroll__track { padding: 0 24px; }
+
+.reach__panel {
+  flex: 0 0 min(78vw, 420px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.reach__media { width: 100%; aspect-ratio: 16 / 10; }
+.reach__body { padding: 22px 24px 26px; }
+.reach__kicker {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--royal-600);
+}
+.reach__body h3 { margin: 6px 0 8px; }
+.reach__body p { font-size: 0.92rem; color: var(--ink-500); margin-bottom: 14px; }
+
+/* ---------- anime.js effects (DrawPath, ClickRipple, ConfettiBurst) ---------- */
+.section-head__underline {
+  display: block;
+  width: 108px;
+  height: 12px;
+  margin: 10px auto 0;
+}
+.section-head--left .section-head__underline,
+.section-head__underline--left {
+  margin-left: 0;
+}
+
+/* Ripple mask lives inside every .btn (position:relative set in global.css) */
+.btn-ripple-mask {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.btn-ripple-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+  transform: scale(0);
+  pointer-events: none;
+}
+
+.confetti-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.confetti-burst__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .three-globe { display: none !important; }
+  .skeleton { animation: none !important; }
+  .tw-caret { animation: none !important; }
+  .hscroll { height: auto !important; }
+  .hscroll__sticky { position: static !important; height: auto !important; overflow-x: auto !important; }
+  .anim-float,
+  .anim-gradient-text,
+  .steps::before,
+  .pulse-fab::before,
+  .starfield,
+  .marquee__track {
+    animation: none !important;
+  }
+  .has-sheen:hover::after { animation: none !important; opacity: 0 !important; }
+  .scroll-progress { display: none !important; }
+  .cursor-glow { display: none !important; }
+  .confetti-burst { display: none !important; }
+}
