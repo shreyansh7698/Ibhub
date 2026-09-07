@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import Seo from '../components/Seo.jsx';
 import Hero from '../components/Hero.jsx';
 import GlobalNetwork from '../components/GlobalNetwork.jsx';
+import ServicesShowcase from '../components/ServicesShowcase.jsx';
 import FinalCTA from '../components/FinalCTA.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
 import CountriesBar from '../components/CountriesBar.jsx';
-import ServiceCard from '../components/ServiceCard.jsx';
 import CountryCard from '../components/CountryCard.jsx';
 import FeatureGrid from '../components/FeatureGrid.jsx';
 import HowItWorks from '../components/HowItWorks.jsx';
@@ -20,7 +20,6 @@ import HorizontalScroll from '../motion/HorizontalScroll.jsx';
 import SmartImage from '../motion/SmartImage.jsx';
 import { countryImages } from '../data/images.js';
 
-import { services } from '../data/services.js';
 import { countries } from '../data/countries.js';
 import { whyChooseUs } from '../data/content.js';
 import { homeFaqs } from '../data/faq.js';
@@ -54,28 +53,8 @@ export default function Home() {
       {/* Signature moment 2 — the connected network */}
       <GlobalNetwork />
 
-      {/* Services */}
-      <section className="section" id="services">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Our Services"
-            title="Everything You Need to Build a Global Business"
-            subtitle="From incorporation to compliance, one team coordinates every part of your international setup."
-          />
-          <div className="grid grid--3">
-            {services.map((service, i) => (
-              <Reveal key={service.slug} delay={(i % 3) * 0.08}>
-                <ServiceCard service={service} />
-              </Reveal>
-            ))}
-          </div>
-          <Reveal className="text-center mt-lg">
-            <Link to="/services" className="btn btn--outline btn--lg">
-              View All Services
-            </Link>
-          </Reveal>
-        </div>
-      </section>
+      {/* Services — 3D storytelling */}
+      <ServicesShowcase />
 
       {/* Company formation countries */}
       <section className="section section--surface" id="countries">
