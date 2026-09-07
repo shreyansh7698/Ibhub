@@ -5,7 +5,7 @@ import { media } from '../data/images.js';
 /**
  * Per-page SEO: unique <title> + meta description + canonical + Open Graph.
  */
-export default function Seo({ title, description, path = '', image = media.teamCollaboration }) {
+export default function Seo({ title, description, path = '', image = media.teamCollaboration, noindex = false }) {
   const fullTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.tagline}`;
   const desc =
     description ||
@@ -16,6 +16,7 @@ export default function Seo({ title, description, path = '', image = media.teamC
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={desc} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
       <link rel="canonical" href={url} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={site.name} />

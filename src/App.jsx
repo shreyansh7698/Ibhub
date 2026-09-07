@@ -1,7 +1,20 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Layout from './components/Layout.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
+
+// Visa application flow + admin — code-split, kept off the marketing bundle.
+import RequireAdmin from './components/admin/RequireAdmin.jsx';
+const TouristVisaCountry = lazy(() => import('./pages/TouristVisaCountry.jsx'));
+const VisaApplication = lazy(() => import('./pages/VisaApplication.jsx'));
+const ApplicationConfirmation = lazy(() => import('./pages/ApplicationConfirmation.jsx'));
+const ApplicationStatusPage = lazy(() => import('./pages/ApplicationStatusPage.jsx'));
+const AdminLogin = lazy(() => import('./admin/AdminLogin.jsx'));
+const AdminLayout = lazy(() => import('./admin/AdminLayout.jsx'));
+const AdminDashboard = lazy(() => import('./admin/AdminDashboard.jsx'));
+const AdminApplications = lazy(() => import('./admin/AdminApplications.jsx'));
+const AdminApplicationDetails = lazy(() => import('./admin/AdminApplicationDetails.jsx'));
 
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
@@ -55,6 +68,14 @@ export default function App() {
 
           <Route path="visa-immigration" element={<VisaImmigration />} />
           <Route path="visa-immigration/tourist-visa" element={<TouristVisa />} />
+          <Route
+            path="visa-immigration/tourist-visa/:countrySlug"
+            element={
+              <Suspense fallback={<div className="route-fallback" />}>
+                <TouristVisaCountry />
+              </Suspense>
+            }
+          />
           <Route path="visa-immigration/business-visa" element={<BusinessVisa />} />
           <Route path="visa-immigration/residency-permit" element={<ResidencyPermit />} />
           <Route path="services/bank-account-assistance" element={<Banking />} />
@@ -76,6 +97,77 @@ export default function App() {
           <Route path="terms" element={<Terms />} />
 
           <Route path="*" element={<NotFound />} />
+        </Route>
+
+        {/* Visa application flow — own minimal chrome, no marketing nav */}
+        <Route
+          path="/visa-application/:countrySlug"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <VisaApplication />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/visa-application/:countrySlug/confirmation"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <ApplicationConfirmation />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/application/:applicationId"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <ApplicationStatusPage />
+            </Suspense>
+          }
+        />
+
+        {/* Admin */}
+        <Route
+          path="/admin/login"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <AdminLogin />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <RequireAdmin>
+              <Suspense fallback={<div className="route-fallback" />}>
+                <AdminLayout />
+              </Suspense>
+            </RequireAdmin>
+          }
+        >
+          <Route
+            index
+            element={
+              <Suspense fallback={<div className="route-fallback" />}>
+                <AdminDashboard />
+              </Suspense>
+            }
+          />
+          <Route
+            path="applications"
+            element={
+              <Suspense fallback={<div className="route-fallback" />}>
+                <AdminApplications />
+              </Suspense>
+            }
+          />
+          <Route
+            path="applications/:applicationId"
+            element={
+              <Suspense fallback={<div className="route-fallback" />}>
+                <AdminApplicationDetails />
+              </Suspense>
+            }
+          />
         </Route>
       </Routes>
     </>

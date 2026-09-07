@@ -9,8 +9,10 @@ import Reveal from './Reveal.jsx';
 import Media from './Media.jsx';
 import ProcessSteps from './ProcessSteps.jsx';
 import Flag from './Flag.jsx';
+import { slugForCode } from '../data/touristVisas.js';
 
 export default function ServiceTemplate({ detail, path, breadcrumbs }) {
+  const isTouristVisa = (path || '').includes('tourist-visa');
   return (
     <div className="page">
       <Seo title={detail.title} description={detail.metaDescription} path={path} />
@@ -87,15 +89,34 @@ export default function ServiceTemplate({ detail, path, breadcrumbs }) {
               title={detail.countriesTitle || 'Countries we cover'}
             />
             <ul className="visa-countries">
-              {detail.countries.map((c, i) => (
-                <Reveal key={c.code} as="li" delay={(i % 4) * 0.05}>
-                  <span className="visa-countries__item">
+              {detail.countries.map((c, i) => {
+                const slug = isTouristVisa ? slugForCode(c.code) : null;
+                const inner = (
+                  <>
                     <Flag code={c.code} name={c.name} size="w40" />
                     {c.name}
-                  </span>
-                </Reveal>
-              ))}
+                  </>
+                );
+                return (
+                  <Reveal key={c.code} as="li" delay={(i % 4) * 0.05}>
+                    {slug ? (
+                      <Link to={`/visa-immigration/tourist-visa/${slug}`} className="visa-countries__item visa-countries__item--link">
+                        {inner}
+                        <span className="visa-countries__apply">Apply →</span>
+                      </Link>
+                    ) : (
+                      <span className="visa-countries__item">{inner}</span>
+                    )}
+                  </Reveal>
+                );
+              })}
             </ul>
+            {isTouristVisa && (
+              <p className="visa-countries__note">
+                Don’t see your destination? <Link to="/contact">Contact us</Link> — we assist with
+                more countries than are listed here.
+              </p>
+            )}
             {detail.countriesNote && <p className="visa-countries__note">{detail.countriesNote}</p>}
           </div>
         </section>
