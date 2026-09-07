@@ -225,21 +225,6 @@
   .prose > .sr.sr-in { transform: none; }
 }
 
-/* ---------- Cursor trail ---------- */
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 50%;
-  background: var(--royal-600);
-  pointer-events: none;
-  z-index: 1399;
-  will-change: transform;
-}
-
 /* ---------- Typewriter ---------- */
 .hero__ticker {
   margin-top: 14px;

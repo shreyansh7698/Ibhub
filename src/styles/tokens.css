@@ -1,0 +1,110 @@
+/* ============================================================
+   IBHUB design tokens — coral system, type scale, z-layers
+   Imported FIRST so every other stylesheet can consume these.
+   ============================================================ */
+
+:root {
+  /* ---- Coral accent (primary) ---- */
+  --coral: #ff6a4d;
+  --coral-strong: #ea4e33;
+  --coral-soft: #ff8a72;
+  --coral-tint: #fff0ec;
+  --coral-glow: rgba(255, 106, 77, 0.35);
+  --coral-line: rgba(255, 106, 77, 0.55);
+
+  /* ---- Structural ink (navy) ---- */
+  --ink: #0b1b3a;
+  --ink-800: #10254c;
+  --ink-700: #1d3a6b;
+  --ink-600: #33507f;
+  --ink-500: #64748b;
+  --ink-400: #94a3b8;
+  --ink-300: #c3cede;
+
+  /* ---- Cinematic dark set-piece palette ---- */
+  --void: #05070d;
+  --void-800: #0a0e18;
+  --void-700: #121826;
+  --char: #1a2030;
+  --on-dark: #e8ecf5;
+  --on-dark-dim: #97a0b5;
+
+  /* ---- Surfaces / light canvas ---- */
+  --white: #ffffff;
+  --paper: #f6f8fc;
+  --paper-2: #eef2f9;
+  --line: #e2e8f2;
+  --glass: rgba(255, 255, 255, 0.62);
+  --glass-dark: rgba(12, 18, 32, 0.5);
+  --hairline: rgba(11, 27, 58, 0.12);
+  --hairline-dark: rgba(255, 255, 255, 0.14);
+
+  /* ---- Rare prestige secondary ---- */
+  --gold: #d4af37;
+
+  /* ---- Radii / shadow ---- */
+  --r-sm: 10px;
+  --r: 16px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --shadow-sm: 0 1px 2px rgba(11, 27, 58, 0.06), 0 6px 16px rgba(11, 27, 58, 0.06);
+  --shadow: 0 14px 40px rgba(11, 27, 58, 0.12);
+  --shadow-lg: 0 30px 80px rgba(11, 27, 58, 0.2);
+  --shadow-coral: 0 18px 44px rgba(255, 106, 77, 0.3);
+
+  /* ---- Type ---- */
+  --font-display: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Fluid display scale — used for the oversized section headings */
+  --fs-mega: clamp(2.8rem, 9vw, 8.5rem);
+  --fs-xl: clamp(2.4rem, 6vw, 5rem);
+  --fs-lg: clamp(1.9rem, 3.6vw, 3rem);
+  --fs-md: clamp(1.3rem, 2vw, 1.6rem);
+  --label: 0.75rem;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Z layers ---- */
+  --z-sky: 0;
+  --z-content: 1;
+  --z-scene: 2;
+  --z-nav: 50;
+  --z-cursor: 9999;
+  --z-overlay: 200;
+
+  /* ---- Legacy aliases (existing stylesheets still reference these) ---- */
+  --royal-600: var(--coral);
+  --royal-500: var(--coral-soft);
+  --royal-100: var(--coral-tint);
+  --navy-900: var(--ink);
+  --navy-800: var(--ink-800);
+  --navy-700: var(--ink-700);
+  --navy-600: var(--ink-600);
+  --gold-500: var(--gold);
+  --gold-400: #e4c661;
+  --ink-900: var(--ink);
+  --surface: var(--paper);
+  --surface-2: var(--paper-2);
+  --ring: 0 0 0 4px rgba(255, 106, 77, 0.22);
+}
+
+/* Prevent stray fixed/absolute decorative layers (sky, cursor, 3D canvases)
+   from ever creating a horizontal scrollbar. `clip` — not `hidden` — so it
+   never becomes a scroll container that would break sticky / ScrollTrigger. */
+html {
+  overflow-x: clip;
+}
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+/* Marks the document while the hero intro overlay is covering the viewport. */
+html.ibhub-intro,
+html.ibhub-intro body {
+  overflow: hidden;
+}

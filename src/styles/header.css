@@ -48,6 +48,49 @@
   border-color: var(--line);
 }
 
+/* Floating over the dark hero — dark, light text, merges with the hero below */
+.header--over-hero {
+  background: rgba(7, 11, 22, 0.86);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+}
+.header--over-hero .nav__link {
+  color: rgba(255, 255, 255, 0.82);
+}
+.header--over-hero .nav__link:hover,
+.header--over-hero .nav__item:hover .nav__link,
+.header--over-hero .nav__link.is-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+.header--over-hero .hamburger {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* Animated underline on nav links */
+.nav__link {
+  position: relative;
+}
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 6px;
+  height: 2px;
+  background: var(--coral);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s var(--ease-out);
+}
+.nav__link:hover::after,
+.nav__link.is-active::after {
+  transform: scaleX(1);
+}
+
 .header__inner {
   display: flex;
   align-items: center;

@@ -1,0 +1,194 @@
+/* ============================================================
+   Daytime-Earth atmosphere — site-wide cinematic sky
+   ============================================================ */
+
+:root {
+  --sky-top: #7fb4ec;
+  --sky-mid: #bcdcf6;
+  --sky-low: #eaf4fd;
+  --sky-horizon: #fff6ec;
+  --sun: #fff2d6;
+  --sun-core: #ffe4b0;
+  --atmo-rim: #bfe0ff;
+  --ocean-deep: #0b3f79;
+  --ocean: #1f6fc2;
+  --land: #6fbf8e;
+  --land-arid: #d8b878;
+}
+
+/* The sky lives behind everything; content sits on translucent sections. */
+body {
+  background:
+    linear-gradient(
+      180deg,
+      var(--sky-top) 0%,
+      var(--sky-mid) 34%,
+      var(--sky-low) 62%,
+      var(--sky-horizon) 100%
+    )
+    fixed;
+  background-color: var(--sky-low);
+}
+
+#root { background: transparent; }
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.sky--static {
+  background: radial-gradient(1200px 700px at 82% -8%, rgba(255, 240, 214, 0.55), transparent 60%);
+}
+
+/* Warm sun bloom, upper-right */
+.sky__sun {
+  position: absolute;
+  top: -22vh;
+  right: -14vw;
+  width: 78vw;
+  height: 78vw;
+  max-width: 1100px;
+  max-height: 1100px;
+  background:
+    radial-gradient(circle at 50% 50%, var(--sun-core) 0%, rgba(255, 236, 200, 0.55) 22%, rgba(255, 244, 224, 0) 62%);
+  filter: blur(6px);
+  animation: sun-breathe 14s ease-in-out infinite;
+}
+@keyframes sun-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+/* Cloud banks — soft ellipses, drift on the compositor (transform only, no
+   repaint), so they cost ~nothing even while covered by the dark set-pieces. */
+.sky__clouds {
+  position: absolute;
+  left: -30%;
+  right: -30%;
+  background-repeat: repeat-x;
+  will-change: transform;
+}
+.sky__clouds--far {
+  top: 8%;
+  height: 40vh;
+  opacity: 0.42;
+  background-size: 1200px 220px;
+  background-image:
+    radial-gradient(160px 56px at 18% 56%, rgba(255, 255, 255, 0.7), transparent 72%),
+    radial-gradient(220px 70px at 44% 50%, rgba(255, 255, 255, 0.62), transparent 74%),
+    radial-gradient(200px 64px at 74% 58%, rgba(255, 255, 255, 0.66), transparent 72%);
+  animation: cloud-drift 160s linear infinite;
+}
+.sky__clouds--near {
+  bottom: -4%;
+  height: 46vh;
+  opacity: 0.9;
+  background-size: 1700px 360px;
+  background-image:
+    radial-gradient(300px 110px at 12% 62%, rgba(255, 255, 255, 0.94), transparent 74%),
+    radial-gradient(420px 140px at 46% 52%, rgba(255, 255, 255, 0.9), transparent 78%),
+    radial-gradient(340px 120px at 82% 62%, rgba(255, 255, 255, 0.92), transparent 74%);
+  animation: cloud-drift 100s linear infinite reverse;
+}
+@keyframes cloud-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-30%, 0, 0); }
+}
+
+/* Warm horizon haze grounding the bottom of the sky */
+.sky__haze {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 40vh;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 246, 236, 0.55) 55%, rgba(255, 241, 224, 0.8) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky__sun, .sky__clouds { animation: none !important; }
+}
+
+/* ---------- Light sections: near-opaque (no backdrop-filter — it was the
+   single biggest scroll cost), a hint of sky still bleeds at the edges. ---------- */
+.section {
+  background: rgba(255, 255, 255, 0.95);
+}
+.section--surface { background: rgba(243, 248, 255, 0.96); }
+.section--surface-2 { background: rgba(236, 243, 253, 0.97); }
+/* Golden-hour contrast band keeps its depth */
+.section--navy {
+  background: linear-gradient(165deg, #0e2a55 0%, #08234a 55%, #0a1f44 100%);
+}
+
+/* Everything the reader touches sits above the fixed sky */
+#main { position: relative; z-index: 1; }
+.footer { position: relative; z-index: 1; }
+.announcement-bar, .site-header, .header { position: relative; z-index: 20; }
+
+/* ============================================================
+   Inner-page hero — daytime rework (overrides components.css)
+   ============================================================ */
+.page-hero {
+  background:
+    radial-gradient(900px 520px at 88% -20%, rgba(255, 232, 196, 0.55), transparent 62%),
+    linear-gradient(180deg, rgba(150, 195, 240, 0.28) 0%, rgba(234, 244, 253, 0.1) 70%, transparent 100%);
+  color: var(--ink-700);
+}
+.page-hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(680px 420px at 12% 120%, rgba(47, 107, 255, 0.14), transparent 62%);
+}
+.page-hero__bg {
+  opacity: 0.1;
+  filter: none;
+  mix-blend-mode: multiply;
+}
+.page-hero__earth-wrap {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: -12%;
+  width: min(46vw, 520px);
+  height: min(46vw, 520px);
+  transform: translateY(-46%);
+  pointer-events: none;
+}
+.page-hero__earth { position: absolute; inset: 0; }
+.page-hero h1 { color: var(--navy-900); }
+.page-hero p { color: var(--ink-700); }
+.page-hero .breadcrumbs { color: var(--ink-500); }
+.page-hero .breadcrumbs a { color: var(--ink-500); }
+.page-hero .breadcrumbs a:hover { color: var(--royal-600); }
+.page-hero__flag { box-shadow: 0 12px 30px rgba(12, 40, 84, 0.22); }
+
+/* The dark-hero "ghost" button needs a light-hero skin */
+.page-hero .btn--ghost-light {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--navy-800);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 26px rgba(12, 40, 84, 0.12);
+}
+.page-hero .btn--ghost-light:hover {
+  background: #fff;
+  color: var(--navy-900);
+  border-color: var(--royal-600);
+}
+
+@media (max-width: 860px) {
+  .page-hero__earth-wrap {
+    width: min(66vw, 320px);
+    height: min(66vw, 320px);
+    right: -32%;
+    top: auto;
+    bottom: -14%;
+    transform: none;
+    opacity: 0.38;
+  }
+}

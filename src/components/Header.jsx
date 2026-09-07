@@ -4,9 +4,11 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { navItems } from '../data/navigation.js';
+import Magnetic from '../motion/Magnetic.jsx';
 import logoUrl from '../assets/Logo.png';
+import logoDarkUrl from '../assets/Dark logo.png';
 
-function Logo({ onClick }) {
+function Logo({ onClick, dark = false }) {
   return (
     <Link to="/" className="logo" onClick={onClick} aria-label="The International Business Hub — home">
       <motion.span
@@ -15,14 +17,8 @@ function Logo({ onClick }) {
         whileTap={{ scale: 0.96 }}
         transition={{ type: 'spring', stiffness: 300, damping: 18 }}
       >
-        <img src={logoUrl} alt="IB Hub" />
+        <img src={dark ? logoDarkUrl : logoUrl} alt="IB Hub" />
       </motion.span>
-
-      {/* <img
-            src={Logo}
-            alt="IB Hub"
-            className="logo__text"
-          /> */}
     </Link>
   );
 }
@@ -213,11 +209,19 @@ function MobileDrawer({ open, onClose }) {
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [atTop, setAtTop] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
 
+  // Home has a full-bleed dark hero — the header floats transparently over it
+  // until the first scroll, then condenses into the solid glass bar.
+  const overHero = location.pathname === '/' && atTop && !drawerOpen;
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      setAtTop(window.scrollY < 40);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -236,24 +240,20 @@ export default function Header() {
 
   return (
     <motion.header
-      className={`header ${scrolled ? 'header--scrolled' : ''}`}
+      className={`header ${scrolled ? 'header--scrolled' : ''} ${overHero ? 'header--over-hero' : ''}`}
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: 'spring', stiffness: 200, damping: 26 }}
     >
       <div className="container header__inner">
-        <Logo />
+        <Logo dark={overHero} />
         <DesktopNav />
         <div className="header__actions">
-          <motion.span
-            style={{ display: 'inline-block' }}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link to="/contact" className="btn btn--primary btn--sm has-sheen">
+          <Magnetic>
+            <Link to="/contact" className="btn btn--coral btn--sm has-sheen" data-cursor-label="Book">
               Book Consultation
             </Link>
-          </motion.span>
+          </Magnetic>
           <motion.button
             type="button"
             className="hamburger"

@@ -5,12 +5,15 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App.jsx';
 
 import './styles/global.css';
+import './styles/tokens.css';
+import './styles/cinematic.css';
 import './styles/header.css';
 import './styles/footer.css';
 import './styles/components.css';
 import './styles/home.css';
 import './styles/pages.css';
 import './styles/animations.css';
+import './styles/atmosphere.css';
 import './styles/responsive.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(

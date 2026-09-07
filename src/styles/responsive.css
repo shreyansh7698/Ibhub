@@ -1,9 +1,6 @@
 /* ============ 1200px ============ */
 @media (max-width: 1200px) {
   .container { max-width: 992px; }
-  .float-card--1 { left: 0; }
-  .float-card--2 { right: 0; }
-  .hero__grid { gap: 40px; }
 }
 
 /* ============ 992px ============ */
@@ -14,12 +11,6 @@
   .header__actions .btn { display: none; }
   .hamburger { display: grid; }
 
-  .hero { padding: 48px 0 72px; }
-  .hero__grid { grid-template-columns: 1fr; }
-  .hero__visual { max-width: 460px; margin: 0 auto; }
-  .hero__sub { max-width: none; }
-  .float-card--1 { left: 2%; }
-  .float-card--2 { right: 2%; }
 
   .grid--3,
   .grid--4,

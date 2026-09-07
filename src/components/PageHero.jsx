@@ -7,12 +7,11 @@ import Parallax from '../motion/Parallax.jsx';
 import Magnetic from '../motion/Magnetic.jsx';
 import ParticleField from '../motion/ParticleField.jsx';
 import WaveDivider from '../motion/WaveDivider.jsx';
-import MorphBlob from '../motion/MorphBlob.jsx';
-import ThreeGlobe from '../motion/ThreeGlobeLazy.jsx';
+import DaytimeEarth from '../motion/DaytimeEarthLazy.jsx';
 import { staggerContainer, staggerItem, spring } from '../motion/presets.js';
 
 /**
- * Reusable dark hero for inner pages.
+ * Reusable daytime-Earth hero for inner pages.
  * @param {{label: string, to?: string}[]} breadcrumbs
  * @param {{label: string, to: string, variant?: string, external?: boolean}[]} actions
  */
@@ -36,11 +35,12 @@ export default function PageHero({
           style={{ backgroundImage: `url(${image})` }}
         />
       )}
-      <div className="starfield" aria-hidden="true" />
-      <ThreeGlobe className="page-hero__globe" color="#4f83ff" />
-      <ParticleField color="120,160,255" linkColor="90,130,255" density="0.7" speed={0.18} />
-      <Parallax speed={0.25} className="bg-grid" as="div" />
-      <MorphBlob color="#2f6bff" size={380} opacity={0.5} style={{ top: -150, right: -50 }} />
+      <div className="page-hero__glow" aria-hidden="true" />
+      <Parallax speed={0.16} className="page-hero__earth-wrap" aria-hidden="true">
+        <DaytimeEarth className="page-hero__earth" />
+      </Parallax>
+      <ParticleField color="255,255,255" linkColor="255,255,255" density="0.4" speed={0.12} maxParticles={40} />
+      <Parallax speed={0.22} className="bg-grid" as="div" />
       <div className="container">
         <motion.div
           className="page-hero__inner"

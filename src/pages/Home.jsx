@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo.jsx';
 import Hero from '../components/Hero.jsx';
+import GlobalNetwork from '../components/GlobalNetwork.jsx';
+import FinalCTA from '../components/FinalCTA.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
 import CountriesBar from '../components/CountriesBar.jsx';
 import ServiceCard from '../components/ServiceCard.jsx';
@@ -38,7 +40,7 @@ export default function Home() {
       <Hero />
 
       {/* Trust / countries bar */}
-      <section className="section section--surface section--tight">
+      <section className="section section--surface section--tight" id="markets">
         <div className="container">
           <SectionHeading
             eyebrow="Global Markets"
@@ -48,6 +50,9 @@ export default function Home() {
           <CountriesBar />
         </div>
       </section>
+
+      {/* Signature moment 2 — the connected network */}
+      <GlobalNetwork />
 
       {/* Services */}
       <section className="section" id="services">
@@ -210,6 +215,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Signature moment 3 — the closing globe */}
+      <FinalCTA />
     </div>
   );
 }
