@@ -17,6 +17,7 @@ import './styles/atmosphere.css';
 import './styles/responsive.css';
 import './styles/visa.css';
 import './styles/admin.css';
+import './styles/auth.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

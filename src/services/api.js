@@ -24,7 +24,14 @@ export const createPaymentOrder = (...a) => impl.createPaymentOrder(...a);
 export const verifyPayment = (...a) => impl.verifyPayment(...a);
 export const getPayment = (...a) => impl.getPayment(...a);
 
+export const userSignup = (...a) => impl.userSignup(...a);
+export const userLogin = (...a) => impl.userLogin(...a);
+export const userForgotPassword = (...a) => impl.userForgotPassword(...a);
+export const userResetPassword = (...a) => impl.userResetPassword(...a);
+
 export const adminLogin = (...a) => impl.adminLogin(...a);
+export const adminForgotPassword = (...a) => impl.adminForgotPassword(...a);
+export const adminResetPassword = (...a) => impl.adminResetPassword(...a);
 export const adminListApplications = (...a) => impl.adminListApplications(...a);
 export const adminGetStats = (...a) => impl.adminGetStats(...a);
 export const adminGetApplication = (...a) => impl.adminGetApplication(...a);

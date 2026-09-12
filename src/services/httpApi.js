@@ -8,11 +8,14 @@
  * handled here beyond a multipart POST and a fetch of a server-issued URL/stream.
  */
 import { API_BASE_URL } from './config.js';
-import { getToken } from './authService.js';
+import { getToken as getAdminToken } from './authService.js';
+import { getUserToken } from './userAuthService.js';
 
 async function req(path, { method = 'GET', body, isForm } = {}) {
   const headers = {};
-  const token = getToken();
+  // Admin routes carry the admin's token; every other route carries the
+  // applicant's. Neither session is ever set unless that flow's login succeeded.
+  const token = path.startsWith('/admin') ? getAdminToken() : getUserToken();
   if (token) headers.Authorization = `Bearer ${token}`;
   if (body && !isForm) headers['Content-Type'] = 'application/json';
   const res = await fetch(`${API_BASE_URL}${path}`, {
@@ -33,11 +36,27 @@ export const createApplication = (payload) => req('/applications', { method: 'PO
 export const getApplication = (id) => req(`/applications/${id}`);
 export const updateApplication = (id, patch) => req(`/applications/${id}`, { method: 'PATCH', body: patch });
 
-export function uploadDocument(id, type, file) {
+export async function uploadDocument(id, type, file) {
   const form = new FormData();
-  form.append('type', type);
+  form.append('document_type', type);
   form.append('file', file);
-  return req(`/applications/${id}/documents`, { method: 'POST', body: form, isForm: true });
+
+  const doc = await req(`/applications/${id}/documents`, {
+    method: 'POST',
+    body: form,
+    isForm: true
+  });
+
+  return {
+    id: doc.id,
+    type: doc.document_type,
+    fileName: doc.original_filename,
+    fileSize: Number(doc.file_size),
+    mimeType: doc.content_type,
+    status: doc.status,
+    rejectionReason: doc.rejection_reason,
+    uploadedAt: doc.created_at
+  };
 }
 export const removeDocument = (id, docId) =>
   req(`/applications/${id}/documents/${docId}`, { method: 'DELETE' });
@@ -45,8 +64,21 @@ export const listDocuments = (id) => req(`/applications/${id}/documents`);
 
 /** Production: a short-lived signed URL from the backend; we fetch it into a Blob. */
 export async function getDocumentBlob(docId, applicationId) {
-  const { url } = await req(`/applications/${applicationId}/documents/${docId}/access`);
-  const res = await fetch(url);
+  const token = getToken();
+
+  const res = await fetch(
+    `${API_BASE_URL}/applications/${applicationId}/documents/${docId}/access`,
+    {
+      method: 'GET',
+      headers: token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : {},
+      credentials: 'include',
+    }
+  );
+
   return res.ok ? res.blob() : null;
 }
 
@@ -57,9 +89,27 @@ export const verifyPayment = (orderId, payload) =>
   req('/payments/verify', { method: 'POST', body: { orderId, ...payload } });
 export const getPayment = (paymentId) => req(`/payments/${paymentId}`);
 
+/* user auth
+ * PLACEHOLDER endpoint paths — none of these exist on the backend yet. Adjust
+ * the paths below to match whatever the backend actually exposes; nothing
+ * else in this file needs to change since api.js/UI call through these names.
+ */
+export const userSignup = (payload) => req('/auth/signup', { method: 'POST', body: payload });
+export const userLogin = (email, password) =>
+  req('/auth/login', { method: 'POST', body: { email, password } });
+export const userForgotPassword = (email) =>
+  req('/auth/forgot-password', { method: 'POST', body: { email } });
+export const userResetPassword = (token, password) =>
+  req('/auth/reset-password', { method: 'POST', body: { token, password } });
+
 /* admin */
 export const adminLogin = (email, password) =>
   req('/admin/login', { method: 'POST', body: { email, password } });
+/* PLACEHOLDER — admin/login exists on the backend already; these two do not yet. */
+export const adminForgotPassword = (email) =>
+  req('/admin/forgot-password', { method: 'POST', body: { email } });
+export const adminResetPassword = (token, password) =>
+  req('/admin/reset-password', { method: 'POST', body: { token, password } });
 export const adminListApplications = (query) => {
   const qs = new URLSearchParams(
     Object.entries(query || {}).filter(([, v]) => v !== '' && v != null)

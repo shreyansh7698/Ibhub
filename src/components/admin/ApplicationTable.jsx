@@ -43,7 +43,8 @@ export default function ApplicationTable({ rows, query, onSort, loading }) {
         </thead>
         <tbody>
           {rows.map((a) => {
-            const verified = a.documents.filter((d) => d.status === DOCUMENT_STATUS.VERIFIED).length;
+            const documents = a.documents || [];
+            const verified = documents.filter((d) => d.status === DOCUMENT_STATUS.VERIFIED).length;
             return (
               <tr key={a.id}>
                 <td className="admin-table__id">{a.id}</td>
@@ -64,7 +65,7 @@ export default function ApplicationTable({ rows, query, onSort, loading }) {
                 </td>
                 <td>
                   <span className="admin-table__docs">
-                    <FileCheck2 aria-hidden="true" /> {verified}/{a.documents.length}
+                    <FileCheck2 aria-hidden="true" /> {verified}/{documents.length}
                   </span>
                 </td>
                 <td>

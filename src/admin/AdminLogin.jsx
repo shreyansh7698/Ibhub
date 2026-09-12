@@ -23,8 +23,8 @@ export default function AdminLogin() {
     setBusy(true);
     setError(null);
     try {
-      const session = await api.adminLogin(email.trim(), password);
-      setSession(session);
+      const response = await api.adminLogin(email.trim(), password);
+      setSession(response.session);
       navigate(dest, { replace: true });
     } catch (err) {
       setError(err.message || 'Sign in failed.');
@@ -69,6 +69,9 @@ export default function AdminLogin() {
                 required
               />
             </div>
+            <Link to="/admin/forgot-password" className="admin-login__back" style={{ margin: 0, textAlign: 'right' }}>
+              Forgot password?
+            </Link>
             {error && (
               <p className="field__error" role="alert">
                 {error}

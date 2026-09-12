@@ -6,11 +6,18 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 
 // Visa application flow + admin — code-split, kept off the marketing bundle.
 import RequireAdmin from './components/admin/RequireAdmin.jsx';
+import RequireUser from './components/auth/RequireUser.jsx';
 const TouristVisaCountry = lazy(() => import('./pages/TouristVisaCountry.jsx'));
 const VisaApplication = lazy(() => import('./pages/VisaApplication.jsx'));
 const ApplicationConfirmation = lazy(() => import('./pages/ApplicationConfirmation.jsx'));
 const ApplicationStatusPage = lazy(() => import('./pages/ApplicationStatusPage.jsx'));
+const Login = lazy(() => import('./pages/Login.jsx'));
+const Signup = lazy(() => import('./pages/Signup.jsx'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword.jsx'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword.jsx'));
 const AdminLogin = lazy(() => import('./admin/AdminLogin.jsx'));
+const AdminForgotPassword = lazy(() => import('./admin/AdminForgotPassword.jsx'));
+const AdminResetPassword = lazy(() => import('./admin/AdminResetPassword.jsx'));
 const AdminLayout = lazy(() => import('./admin/AdminLayout.jsx'));
 const AdminDashboard = lazy(() => import('./admin/AdminDashboard.jsx'));
 const AdminApplications = lazy(() => import('./admin/AdminApplications.jsx'));
@@ -99,21 +106,59 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        {/* Visa application flow — own minimal chrome, no marketing nav */}
+        {/* User auth — gates the application flow below, own minimal chrome */}
+        <Route
+          path="/login"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <Signup />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <ForgotPassword />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <ResetPassword />
+            </Suspense>
+          }
+        />
+
+        {/* Visa application flow — own minimal chrome, no marketing nav. Requires login. */}
         <Route
           path="/visa-application/:countrySlug"
           element={
-            <Suspense fallback={<div className="route-fallback" />}>
-              <VisaApplication />
-            </Suspense>
+            <RequireUser>
+              <Suspense fallback={<div className="route-fallback" />}>
+                <VisaApplication />
+              </Suspense>
+            </RequireUser>
           }
         />
         <Route
           path="/visa-application/:countrySlug/confirmation"
           element={
-            <Suspense fallback={<div className="route-fallback" />}>
-              <ApplicationConfirmation />
-            </Suspense>
+            <RequireUser>
+              <Suspense fallback={<div className="route-fallback" />}>
+                <ApplicationConfirmation />
+              </Suspense>
+            </RequireUser>
           }
         />
         <Route
@@ -131,6 +176,22 @@ export default function App() {
           element={
             <Suspense fallback={<div className="route-fallback" />}>
               <AdminLogin />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/forgot-password"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <AdminForgotPassword />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/reset-password"
+          element={
+            <Suspense fallback={<div className="route-fallback" />}>
+              <AdminResetPassword />
             </Suspense>
           }
         />

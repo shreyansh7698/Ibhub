@@ -251,6 +251,117 @@ export async function getPayment(paymentId) {
   return app ? { ...app.payment, applicationId: app.id } : notFound('Payment');
 }
 
+/* ---------------- user auth (demo only) ----------------
+ * Stand-in for the real signup/login/password-reset endpoints. Persists a
+ * throwaway user list + reset-token list in localStorage (key prefix
+ * `ibhub.mock.`) so the demo survives a reload — never a real credential
+ * store. Passwords are kept as plain strings here purely for the mock; a real
+ * backend hashes them and this module has no opinion on that.
+ */
+const LS_USERS = 'ibhub.mock.users';
+const LS_RESET_TOKENS = 'ibhub.mock.resetTokens';
+
+function readUsers() {
+  try {
+    return JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+  } catch {
+    return [];
+  }
+}
+function writeUsers(users) {
+  try {
+    localStorage.setItem(LS_USERS, JSON.stringify(users));
+  } catch {
+    /* ignore */
+  }
+}
+function readResetTokens() {
+  try {
+    return JSON.parse(localStorage.getItem(LS_RESET_TOKENS) || '[]');
+  } catch {
+    return [];
+  }
+}
+function writeResetTokens(tokens) {
+  try {
+    localStorage.setItem(LS_RESET_TOKENS, JSON.stringify(tokens));
+  } catch {
+    /* ignore */
+  }
+}
+
+export async function userSignup({ fullName, email, phone, password }) {
+  await wait(500);
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const users = readUsers();
+  if (users.some((u) => u.email === normalizedEmail)) {
+    return Promise.reject(new Error('An account with this email already exists.'));
+  }
+  users.push({ fullName, email: normalizedEmail, phone, password, createdAt: now() });
+  writeUsers(users);
+  return {
+    token: rid('USR'),
+    role: 'user',
+    email: normalizedEmail,
+    fullName,
+    expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 8).toISOString() // 8h
+  };
+}
+
+export async function userLogin(email, password) {
+  await wait(500);
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const user = readUsers().find((u) => u.email === normalizedEmail);
+  if (!user || user.password !== password) {
+    return Promise.reject(new Error('Invalid email or password.'));
+  }
+  return {
+    token: rid('USR'),
+    role: 'user',
+    email: user.email,
+    fullName: user.fullName,
+    expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 8).toISOString() // 8h
+  };
+}
+
+/** Always resolves the same way whether or not the account exists (no email enumeration). */
+export async function userForgotPassword(email) {
+  await wait(500);
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const user = readUsers().find((u) => u.email === normalizedEmail);
+  if (!user) return { sent: true };
+
+  const token = rid('RST');
+  const tokens = readResetTokens();
+  tokens.push({
+    token,
+    email: normalizedEmail,
+    kind: 'user',
+    expiresAt: new Date(Date.now() + 1000 * 60 * 30).toISOString() // 30min
+  });
+  writeResetTokens(tokens);
+  // Demo mode has no real email sending — hand back the token so the UI can
+  // surface a working reset link directly instead of silently going nowhere.
+  return { sent: true, demoToken: token };
+}
+
+export async function userResetPassword(token, newPassword) {
+  await wait(500);
+  const tokens = readResetTokens();
+  const entry = tokens.find((t) => t.token === token && t.kind === 'user');
+  if (!entry || new Date(entry.expiresAt).getTime() < Date.now()) {
+    return Promise.reject(new Error('This reset link is invalid or has expired.'));
+  }
+  const users = readUsers();
+  const user = users.find((u) => u.email === entry.email);
+  if (user) {
+    user.password = newPassword;
+    writeUsers(users);
+  }
+  writeResetTokens(tokens.filter((t) => t.token !== token));
+  return { reset: true };
+}
+
 /* ---------------- admin ---------------- */
 
 export async function adminLogin(email, password) {
@@ -265,6 +376,38 @@ export async function adminLogin(email, password) {
     email: DEMO_ADMIN.email,
     expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 4).toISOString() // 4h
   };
+}
+
+/** Same no-enumeration shape as userForgotPassword, scoped to the demo admin account. */
+export async function adminForgotPassword(email) {
+  await wait(500);
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const isAdmin = normalizedEmail === DEMO_ADMIN.email.toLowerCase();
+  if (!isAdmin) return { sent: true };
+
+  const token = rid('ART');
+  const tokens = readResetTokens();
+  tokens.push({
+    token,
+    email: normalizedEmail,
+    kind: 'admin',
+    expiresAt: new Date(Date.now() + 1000 * 60 * 30).toISOString() // 30min
+  });
+  writeResetTokens(tokens);
+  return { sent: true, demoToken: token };
+}
+
+export async function adminResetPassword(token) {
+  await wait(500);
+  const tokens = readResetTokens();
+  const entry = tokens.find((t) => t.token === token && t.kind === 'admin');
+  if (!entry || new Date(entry.expiresAt).getTime() < Date.now()) {
+    return Promise.reject(new Error('This reset link is invalid or has expired.'));
+  }
+  writeResetTokens(tokens.filter((t) => t.token !== token));
+  // Demo: DEMO_ADMIN's password comes from env config and isn't actually
+  // mutated here — a real backend would update the stored admin credential.
+  return { reset: true };
 }
 
 export async function adminListApplications({
@@ -410,6 +553,8 @@ export function __resetMock() {
   try {
     localStorage.removeItem(LS_APPS);
     localStorage.removeItem(LS_SEQ);
+    localStorage.removeItem(LS_USERS);
+    localStorage.removeItem(LS_RESET_TOKENS);
   } catch {
     /* ignore */
   }

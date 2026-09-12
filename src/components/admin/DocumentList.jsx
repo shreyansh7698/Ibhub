@@ -13,14 +13,30 @@ export default function DocumentList({ application, onChange }) {
   const [busyId, setBusyId] = useState(null);
 
   const act = async (docId, status, reason) => {
-    setBusyId(docId);
-    try {
-      const updated = await api.adminSetDocumentStatus(docId, status, reason);
-      onChange(updated);
-    } finally {
-      setBusyId(null);
-    }
-  };
+  setBusyId(docId);
+
+  try {
+    const updated = await api.adminSetDocumentStatus(docId, status, reason);
+
+    const updatedApplication = {
+      ...application,
+      documents: application.documents.map((doc) =>
+        doc.id === updated.id
+          ? {
+              ...doc,
+              status: updated.status,
+              rejectionReason: updated.rejectionReason,
+              updatedAt: updated.updatedAt,
+            }
+          : doc
+      ),
+    };
+
+    onChange(updatedApplication);
+  } finally {
+    setBusyId(null);
+  }
+};
 
   return (
     <div className="doc-list">

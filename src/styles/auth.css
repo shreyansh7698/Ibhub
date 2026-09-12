@@ -1,0 +1,90 @@
+/* ============================================================
+   User auth pages — Login / Signup / Forgot / Reset password.
+   Purely additive: reuses tokens.css + the .field/.btn system
+   already used everywhere else, inside the existing .app-shell
+   chrome (see ApplicationLayout.jsx). No existing rule touched.
+   ============================================================ */
+
+.auth-card {
+  max-width: 440px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 36px;
+}
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.auth-card__intro {
+  color: var(--ink-500);
+  font-size: 0.9rem;
+  margin: -4px 0 18px;
+  line-height: 1.5;
+}
+.auth-links {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--ink-500);
+}
+.auth-links a {
+  color: var(--coral);
+  font-weight: 600;
+}
+.auth-note {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 14px;
+  background: #fff4e5;
+  border: 1px solid #f4d9b0;
+  border-radius: var(--r);
+  font-size: 0.8rem;
+  color: #7a4a12;
+  line-height: 1.5;
+}
+.auth-note svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.auth-note p {
+  margin: 0 0 6px;
+  color: inherit;
+}
+.auth-note a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  word-break: break-all;
+}
+.auth-success {
+  text-align: center;
+  padding: 12px 0 4px;
+}
+.auth-success svg {
+  width: 40px;
+  height: 40px;
+  color: #1c7c4a;
+  margin-bottom: 12px;
+}
+.auth-success p {
+  color: var(--ink-500);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 6px 0 20px;
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 24px;
+  }
+}
