@@ -1,0 +1,685 @@
+{
+  "destinations": [
+    {
+      "slug": "vietnam",
+      "name": "Vietnam",
+      "code": "VN",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "uae",
+      "name": "UAE",
+      "code": "AE",
+      "region": "Middle East"
+    },
+    {
+      "slug": "thailand",
+      "name": "Thailand",
+      "code": "TH",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "sri-lanka",
+      "name": "Sri Lanka",
+      "code": "LK",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "malaysia",
+      "name": "Malaysia",
+      "code": "MY",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "indonesia",
+      "name": "Indonesia",
+      "code": "ID",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "hong-kong",
+      "name": "Hong Kong",
+      "code": "HK",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "egypt",
+      "name": "Egypt",
+      "code": "EG",
+      "region": "Africa"
+    },
+    {
+      "slug": "maldives",
+      "name": "Maldives",
+      "code": "MV",
+      "region": "Indian Ocean"
+    },
+    {
+      "slug": "oman",
+      "name": "Oman",
+      "code": "OM",
+      "region": "Middle East"
+    },
+    {
+      "slug": "south-africa",
+      "name": "South Africa",
+      "code": "ZA",
+      "region": "Africa"
+    },
+    {
+      "slug": "azerbaijan",
+      "name": "Azerbaijan",
+      "code": "AZ",
+      "region": "Caucasus & Central Asia"
+    },
+    {
+      "slug": "georgia",
+      "name": "Georgia",
+      "code": "GE",
+      "region": "Caucasus & Central Asia"
+    },
+    {
+      "slug": "kenya",
+      "name": "Kenya",
+      "code": "KE",
+      "region": "Africa"
+    },
+    {
+      "slug": "russia",
+      "name": "Russia",
+      "code": "RU",
+      "region": "Europe & CIS"
+    },
+    {
+      "slug": "qatar",
+      "name": "Qatar",
+      "code": "QA",
+      "region": "Middle East"
+    },
+    {
+      "slug": "jordan",
+      "name": "Jordan",
+      "code": "JO",
+      "region": "Middle East"
+    },
+    {
+      "slug": "bangladesh",
+      "name": "Bangladesh",
+      "code": "BD",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "morocco",
+      "name": "Morocco",
+      "code": "MA",
+      "region": "Africa"
+    },
+    {
+      "slug": "kyrgyzstan",
+      "name": "Kyrgyzstan",
+      "code": "KG",
+      "region": "Caucasus & Central Asia"
+    },
+    {
+      "slug": "ireland",
+      "name": "Ireland",
+      "code": "IE",
+      "region": "Europe"
+    },
+    {
+      "slug": "bahrain",
+      "name": "Bahrain",
+      "code": "BH",
+      "region": "Middle East"
+    },
+    {
+      "slug": "tanzania",
+      "name": "Tanzania",
+      "code": "TZ",
+      "region": "Africa"
+    },
+    {
+      "slug": "laos",
+      "name": "Laos",
+      "code": "LA",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "bhutan",
+      "name": "Bhutan",
+      "code": "BT",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "kuwait",
+      "name": "Kuwait",
+      "code": "KW",
+      "region": "Middle East"
+    },
+    {
+      "slug": "ethiopia",
+      "name": "Ethiopia",
+      "code": "ET",
+      "region": "Africa"
+    },
+    {
+      "slug": "singapore",
+      "name": "Singapore",
+      "code": "SG",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "turkey",
+      "name": "Turkey",
+      "code": "TR",
+      "region": "Europe"
+    },
+    {
+      "slug": "japan",
+      "name": "Japan",
+      "code": "JP",
+      "region": "Asia Pacific"
+    },
+    {
+      "slug": "uk",
+      "name": "United Kingdom",
+      "code": "GB",
+      "region": "Europe"
+    },
+    {
+      "slug": "usa",
+      "name": "United States of America",
+      "code": "US",
+      "region": "North America"
+    },
+    {
+      "slug": "canada",
+      "name": "Canada",
+      "code": "CA",
+      "region": "North America"
+    },
+    {
+      "slug": "australia",
+      "name": "Australia",
+      "code": "AU",
+      "region": "Oceania"
+    },
+    {
+      "slug": "new-zealand",
+      "name": "New Zealand",
+      "code": "NZ",
+      "region": "Oceania"
+    },
+    {
+      "slug": "europe",
+      "name": "Europe",
+      "code": "EU",
+      "region": "Europe"
+    },
+    {
+      "slug": "south-korea",
+      "name": "South Korea",
+      "code": "KR",
+      "region": "Asia Pacific"
+    }
+  ],
+  "defaults": {
+    "visaTypes": [
+      {
+        "id": "30d-single",
+        "label": "30 days · Single entry",
+        "stayDuration": "30 days",
+        "validity": "60 days from issue",
+        "entryType": "Single",
+        "processingTime": "5–7 working days",
+        "fees": {
+          "visaFee": 3400,
+          "serviceFee": 1800,
+          "tax": 0,
+          "currency": "INR"
+        }
+      }
+    ],
+    "requiredDocuments": [
+      "passport",
+      "photograph",
+      "bank_statement"
+    ],
+    "requiresBankStatement": true,
+    "processingTime": "5–7 working days",
+    "eligibility": [
+      "Passport valid for at least 6 months beyond your intended date of entry",
+      "At least two blank passport pages",
+      "A return or onward ticket",
+      "Sufficient funds for the duration of your stay"
+    ],
+    "requirements": [
+      "Completed application with accurate personal and passport details",
+      "Clear scan of your passport photo page",
+      "Recent passport-style photograph",
+      "Recent bank statements as proof of funds",
+      "Confirmed travel dates"
+    ],
+    "applicationFields": []
+  },
+  "overrides": {
+    "uae": {
+      "processingTime": "3–5 working days",
+      "visaTypes": [
+        {
+          "id": "uae-30-single",
+          "label": "30 days · Single entry",
+          "stayDuration": "30 days",
+          "validity": "60 days from issue",
+          "entryType": "Single",
+          "processingTime": "3–5 working days",
+          "fees": {
+            "visaFee": 6800,
+            "serviceFee": 2200,
+            "tax": 0,
+            "currency": "INR"
+          }
+        },
+        {
+          "id": "uae-60-single",
+          "label": "60 days · Single entry",
+          "stayDuration": "60 days",
+          "validity": "60 days from issue",
+          "entryType": "Single",
+          "processingTime": "3–5 working days",
+          "fees": {
+            "visaFee": 11500,
+            "serviceFee": 2600,
+            "tax": 0,
+            "currency": "INR"
+          }
+        },
+        {
+          "id": "uae-30-multi",
+          "label": "30 days · Multiple entry",
+          "stayDuration": "30 days per visit",
+          "validity": "60 days from issue",
+          "entryType": "Multiple",
+          "processingTime": "3–5 working days",
+          "fees": {
+            "visaFee": 13900,
+            "serviceFee": 2600,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ],
+      "eligibility": [
+        "Passport valid for at least 6 months from your date of arrival",
+        "A confirmed return flight",
+        "Proof of accommodation or a UAE host",
+        "Bank statements showing sufficient funds"
+      ]
+    },
+    "thailand": {
+      "processingTime": "5–10 working days",
+      "visaTypes": [
+        {
+          "id": "th-single-60",
+          "label": "Tourist visa · 60 days · Single entry",
+          "stayDuration": "60 days (extendable in-country)",
+          "validity": "3 months from issue",
+          "entryType": "Single",
+          "processingTime": "5–10 working days",
+          "fees": {
+            "visaFee": 3600,
+            "serviceFee": 1900,
+            "tax": 0,
+            "currency": "INR"
+          }
+        },
+        {
+          "id": "th-multi-6m",
+          "label": "Tourist visa · Multiple entry (6 months)",
+          "stayDuration": "60 days per entry",
+          "validity": "6 months from issue",
+          "entryType": "Multiple",
+          "processingTime": "7–12 working days",
+          "fees": {
+            "visaFee": 12500,
+            "serviceFee": 2400,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ],
+      "requiredDocuments": [
+        "passport",
+        "photograph",
+        "bank_statement",
+        "flight_itinerary",
+        "hotel_booking"
+      ]
+    },
+    "singapore": {
+      "processingTime": "3–5 working days",
+      "visaTypes": [
+        {
+          "id": "sg-30-multi",
+          "label": "30 days · Multiple entry",
+          "stayDuration": "Up to 30 days per visit",
+          "validity": "2 years (subject to passport validity)",
+          "entryType": "Multiple",
+          "processingTime": "3–5 working days",
+          "fees": {
+            "visaFee": 2100,
+            "serviceFee": 1600,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ],
+      "requiredDocuments": [
+        "passport",
+        "photograph",
+        "bank_statement",
+        "flight_itinerary"
+      ]
+    },
+    "vietnam": {
+      "processingTime": "3–5 working days",
+      "visaTypes": [
+        {
+          "id": "vn-evisa-30-single",
+          "label": "E-visa · 30 days · Single entry",
+          "stayDuration": "30 days",
+          "validity": "30 days from the entry date",
+          "entryType": "Single",
+          "processingTime": "3–5 working days",
+          "fees": {
+            "visaFee": 2300,
+            "serviceFee": 1400,
+            "tax": 0,
+            "currency": "INR"
+          }
+        },
+        {
+          "id": "vn-evisa-90-multi",
+          "label": "E-visa · 90 days · Multiple entry",
+          "stayDuration": "90 days",
+          "validity": "90 days from the entry date",
+          "entryType": "Multiple",
+          "processingTime": "3–5 working days",
+          "fees": {
+            "visaFee": 5200,
+            "serviceFee": 1600,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ],
+      "requiredDocuments": [
+        "passport",
+        "photograph"
+      ],
+      "requiresBankStatement": false,
+      "eligibility": [
+        "Passport valid for at least 6 months with two blank pages",
+        "A digital passport photo and passport bio-page scan",
+        "Entry and exit through an approved international checkpoint"
+      ]
+    },
+    "indonesia": {
+      "processingTime": "3–5 working days",
+      "visaTypes": [
+        {
+          "id": "id-b1-30",
+          "label": "Visit visa (B1) · 30 days",
+          "stayDuration": "30 days (extendable once)",
+          "validity": "90 days from issue",
+          "entryType": "Single",
+          "processingTime": "3–5 working days",
+          "fees": {
+            "visaFee": 3900,
+            "serviceFee": 1700,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "sri-lanka": {
+      "processingTime": "2–4 working days",
+      "visaTypes": [
+        {
+          "id": "lk-eta-30-double",
+          "label": "ETA · 30 days · Double entry",
+          "stayDuration": "30 days",
+          "validity": "3 months from issue",
+          "entryType": "Double",
+          "processingTime": "2–4 working days",
+          "fees": {
+            "visaFee": 4200,
+            "serviceFee": 1500,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ],
+      "requiredDocuments": [
+        "passport",
+        "photograph"
+      ],
+      "requiresBankStatement": false
+    },
+    "malaysia": {
+      "processingTime": "2–4 working days",
+      "visaTypes": [
+        {
+          "id": "my-evisa-30-single",
+          "label": "E-visa · 30 days · Single entry",
+          "stayDuration": "30 days",
+          "validity": "3 months from issue",
+          "entryType": "Single",
+          "processingTime": "2–4 working days",
+          "fees": {
+            "visaFee": 2600,
+            "serviceFee": 1400,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ],
+      "requiredDocuments": [
+        "passport",
+        "photograph",
+        "bank_statement",
+        "flight_itinerary",
+        "hotel_booking"
+      ]
+    },
+    "egypt": {
+      "processingTime": "5–8 working days",
+      "visaTypes": [
+        {
+          "id": "eg-evisa-30-single",
+          "label": "E-visa · 30 days · Single entry",
+          "stayDuration": "30 days",
+          "validity": "3 months from issue",
+          "entryType": "Single",
+          "processingTime": "5–8 working days",
+          "fees": {
+            "visaFee": 3100,
+            "serviceFee": 1600,
+            "tax": 0,
+            "currency": "INR"
+          }
+        },
+        {
+          "id": "eg-evisa-multi",
+          "label": "E-visa · Multiple entry",
+          "stayDuration": "30 days per visit",
+          "validity": "6 months from issue",
+          "entryType": "Multiple",
+          "processingTime": "5–8 working days",
+          "fees": {
+            "visaFee": 5400,
+            "serviceFee": 1900,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "georgia": {
+      "requiredDocuments": [
+        "passport",
+        "photograph"
+      ],
+      "requiresBankStatement": false
+    },
+    "azerbaijan": {
+      "requiredDocuments": [
+        "passport",
+        "photograph"
+      ],
+      "requiresBankStatement": false
+    },
+    "maldives": {
+      "requiredDocuments": [
+        "passport",
+        "flight_itinerary",
+        "hotel_booking"
+      ],
+      "requiresBankStatement": false
+    },
+    "canada": {
+      "processingTime": "30–60 Working Days",
+      "visaTypes": [
+        {
+          "id": "ca-sticker-multi",
+          "label": "Sticker Visa · 6 Months · Multiple Entries",
+          "stayDuration": "6 Months",
+          "validity": "10 Years",
+          "entryType": "Multiple Entries",
+          "processingTime": "30–60 Working Days",
+          "fees": {
+            "visaFee": 85000,
+            "serviceFee": 0,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "australia": {
+      "processingTime": "3–4 Weeks",
+      "visaTypes": [
+        {
+          "id": "au-evisa-single",
+          "label": "E-Visa · 90 Days · Single Entry",
+          "stayDuration": "90 Days",
+          "validity": "3 Years",
+          "entryType": "Single Entry",
+          "processingTime": "3–4 Weeks",
+          "fees": {
+            "visaFee": 155000,
+            "serviceFee": 0,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "japan": {
+      "processingTime": "10–12 Working Days",
+      "visaTypes": [
+        {
+          "id": "jp-sticker-single",
+          "label": "Sticker Visa · 15 Days · Single Entry",
+          "stayDuration": "15 Days",
+          "validity": "90 Months",
+          "entryType": "Single Entry",
+          "processingTime": "10–12 Working Days",
+          "fees": {
+            "visaFee": 67000,
+            "serviceFee": 0,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "uk": {
+      "processingTime": "3–5 Weeks",
+      "visaTypes": [
+        {
+          "id": "uk-sticker-single-multi",
+          "label": "Sticker Visa · 180 Days · Single/Multiple Entry",
+          "stayDuration": "180 Days",
+          "validity": "6 Months",
+          "entryType": "Single/Multiple Entry",
+          "processingTime": "3–5 Weeks",
+          "fees": {
+            "visaFee": 87000,
+            "serviceFee": 0,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "usa": {
+      "processingTime": "Depends on Embassy",
+      "visaTypes": [
+        {
+          "id": "usa-b1b2-multi",
+          "label": "B1/B2 Sticker Visa · 6 Months · Multiple Entry",
+          "stayDuration": "6 Months",
+          "validity": "10 Years",
+          "entryType": "Multiple Entry",
+          "processingTime": "Depends on Embassy",
+          "fees": {
+            "visaFee": 120000,
+            "serviceFee": 0,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "south-korea": {
+      "processingTime": "10–15 Working Days",
+      "visaTypes": [
+        {
+          "id": "kr-short-term",
+          "label": "Short Term Visa · 30 Days",
+          "stayDuration": "30 Days",
+          "validity": "180 Days",
+          "entryType": "",
+          "processingTime": "10–15 Working Days",
+          "fees": {
+            "visaFee": 12000,
+            "serviceFee": 0,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    },
+    "new-zealand": {
+      "processingTime": "2025 Working Days",
+      "visaTypes": [
+        {
+          "id": "nz-evisa-regular",
+          "label": "E-Visa (Regular Entry) · 6 Months",
+          "stayDuration": "6 Months",
+          "validity": "18 Months",
+          "entryType": "",
+          "processingTime": "2025 Working Days",
+          "fees": {
+            "visaFee": 87000,
+            "serviceFee": 0,
+            "tax": 0,
+            "currency": "INR"
+          }
+        }
+      ]
+    }
+  }
+}
