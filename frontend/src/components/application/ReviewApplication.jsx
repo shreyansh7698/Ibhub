@@ -108,9 +108,11 @@ export default function ReviewApplication({
         </p>
       </section>
 
-      <section className="review__card review__card--pay">
-        <PaymentSummary breakdown={visaType.fees} currency={visaType.fees.currency} heading="Estimated fees" muted />
-      </section>
+      {!visa.noPayment && (
+        <section className="review__card review__card--pay">
+          <PaymentSummary breakdown={visaType.fees} currency={visaType.fees.currency} heading="Estimated fees" muted />
+        </section>
+      )}
 
       <LegalNotice />
 

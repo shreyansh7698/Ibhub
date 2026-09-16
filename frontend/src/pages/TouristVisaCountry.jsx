@@ -54,10 +54,12 @@ export default function TouristVisaCountry() {
                   <div><dt>Validity</dt><dd>{t.validity}</dd></div>
                   <div><dt>Entry</dt><dd>{t.entryType}</dd></div>
                   <div><dt>Processing time</dt><dd>{t.processingTime}</dd></div>
-                  <div className="visa-glance__fee">
-                    <dt>From</dt>
-                    <dd>{formatMoney(t.fees.visaFee + t.fees.serviceFee + t.fees.tax, t.fees.currency)}</dd>
-                  </div>
+                  {!visa.noPayment && (
+                    <div className="visa-glance__fee">
+                      <dt>From</dt>
+                      <dd>{formatMoney(t.fees.visaFee + t.fees.serviceFee + t.fees.tax, t.fees.currency)}</dd>
+                    </div>
+                  )}
                 </dl>
                 <Link to={`${applyTo}?visaType=${t.id}`} className="btn btn--coral btn--block">
                   Apply for this visa <ArrowRight aria-hidden="true" />

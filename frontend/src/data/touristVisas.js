@@ -148,22 +148,13 @@ const OVERRIDES = {
     processingTime: '5–10 working days',
     visaTypes: [
       {
-        id: 'th-single-60',
-        label: 'Tourist visa · 60 days · Single entry',
+        id: 'th-tourist',
+        label: 'Tourist Visa',
         stayDuration: '60 days (extendable in-country)',
         validity: '3 months from issue',
         entryType: 'Single',
         processingTime: '5–10 working days',
-        fees: { visaFee: 3600, serviceFee: 1900, tax: 0, currency: CURRENCY }
-      },
-      {
-        id: 'th-multi-6m',
-        label: 'Tourist visa · Multiple entry (6 months)',
-        stayDuration: '60 days per entry',
-        validity: '6 months from issue',
-        entryType: 'Multiple',
-        processingTime: '7–12 working days',
-        fees: { visaFee: 12500, serviceFee: 2400, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 15000, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: ['passport', 'photograph', 'bank_statement', 'flight_itinerary', 'hotel_booking']
@@ -172,13 +163,13 @@ const OVERRIDES = {
     processingTime: '3–5 working days',
     visaTypes: [
       {
-        id: 'sg-30-multi',
-        label: '30 days · Multiple entry',
+        id: 'sg-tourist',
+        label: 'Tourist Visa',
         stayDuration: 'Up to 30 days per visit',
         validity: '2 years (subject to passport validity)',
         entryType: 'Multiple',
         processingTime: '3–5 working days',
-        fees: { visaFee: 2100, serviceFee: 1600, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 10500, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: ['passport', 'photograph', 'bank_statement', 'flight_itinerary']
@@ -217,13 +208,13 @@ const OVERRIDES = {
     processingTime: '3–5 working days',
     visaTypes: [
       {
-        id: 'id-b1-30',
-        label: 'Visit visa (B1) · 30 days',
+        id: 'id-tourist',
+        label: 'Tourist Visa',
         stayDuration: '30 days (extendable once)',
         validity: '90 days from issue',
         entryType: 'Single',
         processingTime: '3–5 working days',
-        fees: { visaFee: 3900, serviceFee: 1700, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 7500, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ]
   },
@@ -281,8 +272,36 @@ const OVERRIDES = {
       }
     ]
   },
-  georgia: { requiredDocuments: ['passport', 'photograph'], requiresBankStatement: false },
-  azerbaijan: { requiredDocuments: ['passport', 'photograph'], requiresBankStatement: false },
+  georgia: {
+    visaTypes: [
+      {
+        id: 'ge-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 45000, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ],
+    requiredDocuments: ['passport', 'photograph'],
+    requiresBankStatement: false
+  },
+  azerbaijan: {
+    visaTypes: [
+      {
+        id: 'az-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 10500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ],
+    requiredDocuments: ['passport', 'photograph'],
+    requiresBankStatement: false
+  },
   maldives: { requiredDocuments: ['passport', 'flight_itinerary', 'hotel_booking'], requiresBankStatement: false },
 
   /* Long-haul tourist visa destinations — visa type, stay/validity, processing
@@ -291,6 +310,8 @@ const OVERRIDES = {
      full amount is recorded under visaFee with serviceFee/tax at 0. */
   canada: {
     processingTime: '30–60 Working Days',
+    // No rate shown and no payment step for this destination — see `noPayment`.
+    noPayment: true,
     visaTypes: [
       {
         id: 'ca-sticker-multi',
@@ -299,13 +320,14 @@ const OVERRIDES = {
         validity: '10 Years',
         entryType: 'Multiple Entries',
         processingTime: '30–60 Working Days',
-        fees: { visaFee: 85000, serviceFee: 0, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 0, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: LONG_HAUL_DOCUMENTS
   },
   australia: {
     processingTime: '3–4 Weeks',
+    noPayment: true,
     visaTypes: [
       {
         id: 'au-evisa-single',
@@ -314,7 +336,7 @@ const OVERRIDES = {
         validity: '3 Years',
         entryType: 'Single Entry',
         processingTime: '3–4 Weeks',
-        fees: { visaFee: 155000, serviceFee: 0, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 0, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: LONG_HAUL_DOCUMENTS
@@ -331,13 +353,14 @@ const OVERRIDES = {
         validity: '90 Months',
         entryType: 'Single Entry',
         processingTime: '10–12 Working Days',
-        fees: { visaFee: 67000, serviceFee: 0, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 65000, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: LONG_HAUL_DOCUMENTS
   },
   uk: {
     processingTime: '3–5 Weeks',
+    noPayment: true,
     visaTypes: [
       {
         id: 'uk-sticker-single-multi',
@@ -346,13 +369,14 @@ const OVERRIDES = {
         validity: '6 Months',
         entryType: 'Single/Multiple Entry',
         processingTime: '3–5 Weeks',
-        fees: { visaFee: 87000, serviceFee: 0, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 0, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: LONG_HAUL_DOCUMENTS
   },
   usa: {
     processingTime: 'Depends on Embassy',
+    noPayment: true,
     visaTypes: [
       {
         id: 'usa-b1b2-multi',
@@ -361,7 +385,7 @@ const OVERRIDES = {
         validity: '10 Years',
         entryType: 'Multiple Entry',
         processingTime: 'Depends on Embassy',
-        fees: { visaFee: 120000, serviceFee: 0, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 0, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: LONG_HAUL_DOCUMENTS
@@ -377,7 +401,7 @@ const OVERRIDES = {
         // Entry type (single/multiple) is not specified in the source document.
         entryType: '',
         processingTime: '10–15 Working Days',
-        fees: { visaFee: 12000, serviceFee: 0, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 25000, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: LONG_HAUL_DOCUMENTS
@@ -386,7 +410,8 @@ const OVERRIDES = {
     // Processing time sourced verbatim as "2025 Working Days" — this reads as a
     // likely typo in the source document (compare Australia/UK at 3-5 weeks).
     // Preserved as-is rather than silently corrected; confirm the real figure.
-    processingTime: '2025 Working Days',
+    processingTime: '20-25 Working Days',
+    noPayment: true,
     visaTypes: [
       {
         id: 'nz-evisa-regular',
@@ -394,8 +419,8 @@ const OVERRIDES = {
         stayDuration: '6 Months',
         validity: '18 Months',
         entryType: '',
-        processingTime: '2025 Working Days',
-        fees: { visaFee: 87000, serviceFee: 0, tax: 0, currency: CURRENCY }
+        processingTime: '20-25 Working Days',
+        fees: { visaFee: 0, serviceFee: 0, tax: 0, currency: CURRENCY }
       }
     ],
     requiredDocuments: LONG_HAUL_DOCUMENTS
@@ -408,6 +433,205 @@ const OVERRIDES = {
      destination category. */
   europe: {
     requiredDocuments: LONG_HAUL_DOCUMENTS
+  },
+
+  /* Flat-rate tourist visa destinations — single total charge (no visa-fee/
+     service-fee split), so the full amount is recorded under visaFee with
+     serviceFee/tax at 0, matching the long-haul destinations above. */
+  'hong-kong': {
+    visaTypes: [
+      {
+        id: 'hk-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 1500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  oman: {
+    visaTypes: [
+      {
+        id: 'om-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 10500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  turkey: {
+    visaTypes: [
+      {
+        id: 'tr-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 25000, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  morocco: {
+    visaTypes: [
+      {
+        id: 'ma-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 20000, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  bahrain: {
+    visaTypes: [
+      {
+        id: 'bh-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 13700, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  russia: {
+    visaTypes: [
+      {
+        id: 'ru-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 17000, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  'south-africa': {
+    visaTypes: [
+      {
+        id: 'za-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 30000, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  tanzania: {
+    visaTypes: [
+      {
+        id: 'tz-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 17500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  laos: {
+    visaTypes: [
+      {
+        id: 'la-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 13500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  kenya: {
+    visaTypes: [
+      {
+        id: 'ke-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 14500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  jordan: {
+    visaTypes: [
+      {
+        id: 'jo-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 20500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  ethiopia: {
+    visaTypes: [
+      {
+        id: 'et-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 8500, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  qatar: {
+    visaTypes: [
+      {
+        id: 'qa-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 2100, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  ireland: {
+    visaTypes: [
+      {
+        id: 'ie-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 13000, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
+  },
+  bhutan: {
+    visaTypes: [
+      {
+        id: 'bt-tourist',
+        label: 'Tourist Visa',
+        stayDuration: '30 days',
+        validity: '60 days from issue',
+        entryType: 'Single',
+        processingTime: '5–7 working days',
+        fees: { visaFee: 20000, serviceFee: 0, tax: 0, currency: CURRENCY }
+      }
+    ]
   }
 };
 

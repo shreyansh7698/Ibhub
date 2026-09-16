@@ -174,7 +174,6 @@ export const serviceDetails = {
       { name: 'Russia', code: 'ru' },
       { name: 'Qatar', code: 'qa' },
       { name: 'Jordan', code: 'jo' },
-      { name: 'Bangladesh', code: 'bd' },
       { name: 'Morocco', code: 'ma' },
       { name: 'Kyrgyzstan', code: 'kg' },
       { name: 'Ireland', code: 'ie' },

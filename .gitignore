@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Environment / secrets
+.env
+*.env
+!*.env.example
+
+# Runtime data
+backend/app.db
+backend/uploads/
+
+# Build output
+frontend/dist/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+
+venv/

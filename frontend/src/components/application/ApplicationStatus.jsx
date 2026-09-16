@@ -17,6 +17,17 @@ export function StatusBadge({ status }) {
 export default function ApplicationStatus({ application }) {
   const s = application.status;
   const p = application.payment?.status;
+  // Destinations with no payment step never create a Payment record. Once such
+  // an application has moved past the pre-payment statuses, we know payment was
+  // never required (rather than merely not yet reached), so drop that stage
+  // instead of leaving it permanently unchecked.
+  const paymentNotRequired =
+    !application.payment &&
+    s !== APPLICATION_STATUS.DRAFT &&
+    s !== APPLICATION_STATUS.DOCUMENTS_PENDING &&
+    s !== APPLICATION_STATUS.READY_FOR_PAYMENT &&
+    s !== APPLICATION_STATUS.PAYMENT_PENDING;
+  const stages = paymentNotRequired ? STAGES.filter((stage) => stage.key !== 'paid') : STAGES;
   return (
     <div className="app-status">
       <div className="app-status__head">
@@ -24,7 +35,7 @@ export default function ApplicationStatus({ application }) {
         <StatusBadge status={s} />
       </div>
       <ol className="app-status__track">
-        {STAGES.map((stage) => {
+        {stages.map((stage) => {
           const done = stage.reached(s, p);
           return (
             <li key={stage.key} className={done ? 'is-done' : ''}>

@@ -8,12 +8,20 @@ const fmtDate = (iso) => new Date(iso).toLocaleDateString(undefined, { day: '2-d
 
 export default function ApplicationConfirmationCard({ application }) {
   const p = application.payment || {};
+  const hasPayment = Boolean(application.payment);
   const rows = [
     ['Application ID', application.id],
-    ['Payment reference', p.reference || '—'],
-    ['Destination', application.countryName],
-    ['Visa type', application.visaTypeLabel],
-    ['Amount paid', p.amount ? formatMoney(p.amount, p.currency) : '—'],
+    ...(hasPayment
+      ? [
+          ['Payment reference', p.reference || '—'],
+          ['Destination', application.countryName],
+          ['Visa type', application.visaTypeLabel],
+          ['Amount paid', p.amount ? formatMoney(p.amount, p.currency) : '—']
+        ]
+      : [
+          ['Destination', application.countryName],
+          ['Visa type', application.visaTypeLabel]
+        ]),
     ['Date', p.paidAt ? fmtDate(p.paidAt) : fmtDate(application.updatedAt)]
   ];
 
@@ -22,7 +30,7 @@ export default function ApplicationConfirmationCard({ application }) {
       <div className="confirm-card__icon">
         <SuccessCheck size={48} />
       </div>
-      <h2>Payment successful — application submitted</h2>
+      <h2>{hasPayment ? 'Payment successful — application submitted' : 'Application submitted'}</h2>
       <p className="confirm-card__lead">
         We've received your {application.countryName} tourist visa application. Our team will review
         your details and documents and contact you if anything else is needed.
@@ -38,9 +46,9 @@ export default function ApplicationConfirmationCard({ application }) {
       </dl>
 
       <div className="confirm-card__disclaimer">
-        Payment confirms submission of your application. Visa approval is subject to the applicable
-        immigration / visa authority and its verification process — it is not guaranteed by this
-        payment.
+        {hasPayment
+          ? 'Payment confirms submission of your application. Visa approval is subject to the applicable immigration / visa authority and its verification process — it is not guaranteed by this payment.'
+          : 'Submission of your application does not guarantee visa approval, which is subject to the applicable immigration / visa authority and its verification process.'}
       </div>
 
       <div className="confirm-card__actions">

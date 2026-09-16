@@ -44,7 +44,7 @@ export default function ApplicationWizard({ visa, countrySlug, initialVisaTypeId
       { key: 'passport', label: 'Passport' },
       ...(hasExtraDocs ? [{ key: 'documents', label: 'Documents' }] : []),
       { key: 'review', label: 'Review' },
-      { key: 'payment', label: 'Payment' }
+      ...(visa.noPayment ? [] : [{ key: 'payment', label: 'Payment' }])
     ];
   }, [visa]);
   const [stepIndex, setStepIndex] = useState(0);
@@ -119,7 +119,11 @@ export default function ApplicationWizard({ visa, countrySlug, initialVisaTypeId
     }
     if (step === 'review') {
       if (!confirmAccurate || !confirmConsent) {
-        setStepError('Please confirm both statements to continue to payment.');
+        setStepError(
+          visa.noPayment
+            ? 'Please confirm both statements to continue.'
+            : 'Please confirm both statements to continue to payment.'
+        );
         return false;
       }
       return true;
@@ -139,8 +143,12 @@ export default function ApplicationWizard({ visa, countrySlug, initialVisaTypeId
       setApplication(updated);
     }
     if (step === 'review') {
-      const o = await api.createPaymentOrder(application.id);
-      setOrder(o);
+      if (visa.noPayment) {
+        await api.updateApplication(application.id, { step: 'UNDER_REVIEW' });
+      } else {
+        const o = await api.createPaymentOrder(application.id);
+        setOrder(o);
+      }
     }
   };
 
@@ -153,6 +161,12 @@ export default function ApplicationWizard({ visa, countrySlug, initialVisaTypeId
     setBusy(true);
     try {
       await persistStep();
+      if (step === 'review' && visa.noPayment) {
+        navigate(`/visa-application/${countrySlug}/confirmation?id=${encodeURIComponent(application.id)}`, {
+          state: { applicationId: application.id }
+        });
+        return;
+      }
       setStepIndex((i) => Math.min(i + 1, steps.length - 1));
     } catch (e) {
       setStepError(e.message || 'Something went wrong. Please try again.');
@@ -262,7 +276,15 @@ export default function ApplicationWizard({ visa, countrySlug, initialVisaTypeId
 
               {step === 'review' && (
                 <>
-                  <StepHeader n={String(steps.findIndex((s) => s.key === 'review') + 1).padStart(2, '0')} title="Review your application" desc="Check everything is correct before payment. You can edit any section." />
+                  <StepHeader
+                    n={String(steps.findIndex((s) => s.key === 'review') + 1).padStart(2, '0')}
+                    title="Review your application"
+                    desc={
+                      visa.noPayment
+                        ? 'Check everything is correct before you submit. You can edit any section.'
+                        : 'Check everything is correct before payment. You can edit any section.'
+                    }
+                  />
                   <ReviewApplication
                     visa={visa}
                     visaType={visaType}
@@ -301,7 +323,11 @@ export default function ApplicationWizard({ visa, countrySlug, initialVisaTypeId
                     <LoadingDots color="#fff" /> Saving…
                   </span>
                 ) : step === 'review' ? (
-                  <>Continue to payment <ArrowRight aria-hidden="true" /></>
+                  visa.noPayment ? (
+                    <>Submit application <ArrowRight aria-hidden="true" /></>
+                  ) : (
+                    <>Continue to payment <ArrowRight aria-hidden="true" /></>
+                  )
                 ) : (
                   <>Continue <ArrowRight aria-hidden="true" /></>
                 )}
@@ -321,7 +347,9 @@ export default function ApplicationWizard({ visa, countrySlug, initialVisaTypeId
               <div><dt>Processing</dt><dd>{visaType.processingTime}</dd></div>
             </dl>
           </div>
-          <PaymentSummary breakdown={order?.breakdown || visaType.fees} currency={order?.currency || visaType.fees.currency} muted={!order} />
+          {!visa.noPayment && (
+            <PaymentSummary breakdown={order?.breakdown || visaType.fees} currency={order?.currency || visaType.fees.currency} muted={!order} />
+          )}
         </aside>
       </div>
     </div>
