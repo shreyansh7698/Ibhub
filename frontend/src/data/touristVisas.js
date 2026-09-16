@@ -116,26 +116,8 @@ const OVERRIDES = {
         validity: '60 days from issue',
         entryType: 'Single',
         processingTime: '3–5 working days',
-        fees: { visaFee: 6800, serviceFee: 2200, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 9000, serviceFee: 2200, tax: 0, currency: CURRENCY }
       },
-      {
-        id: 'uae-60-single',
-        label: '60 days · Single entry',
-        stayDuration: '60 days',
-        validity: '60 days from issue',
-        entryType: 'Single',
-        processingTime: '3–5 working days',
-        fees: { visaFee: 11500, serviceFee: 2600, tax: 0, currency: CURRENCY }
-      },
-      {
-        id: 'uae-30-multi',
-        label: '30 days · Multiple entry',
-        stayDuration: '30 days per visit',
-        validity: '60 days from issue',
-        entryType: 'Multiple',
-        processingTime: '3–5 working days',
-        fees: { visaFee: 13900, serviceFee: 2600, tax: 0, currency: CURRENCY }
-      }
     ],
     eligibility: [
       'Passport valid for at least 6 months from your date of arrival',
@@ -181,20 +163,12 @@ const OVERRIDES = {
         id: 'vn-evisa-30-single',
         label: 'E-visa · 30 days · Single entry',
         stayDuration: '30 days',
-        validity: '30 days from the entry date',
+        validity: '90 days from the entry date',
         entryType: 'Single',
         processingTime: '3–5 working days',
-        fees: { visaFee: 2300, serviceFee: 1400, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 2600, serviceFee: 1400, tax: 0, currency: CURRENCY }
       },
-      {
-        id: 'vn-evisa-90-multi',
-        label: 'E-visa · 90 days · Multiple entry',
-        stayDuration: '90 days',
-        validity: '90 days from the entry date',
-        entryType: 'Multiple',
-        processingTime: '3–5 working days',
-        fees: { visaFee: 5200, serviceFee: 1600, tax: 0, currency: CURRENCY }
-      }
+      
     ],
     requiredDocuments: ['passport', 'photograph'],
     requiresBankStatement: false,
@@ -259,17 +233,8 @@ const OVERRIDES = {
         validity: '3 months from issue',
         entryType: 'Single',
         processingTime: '5–8 working days',
-        fees: { visaFee: 3100, serviceFee: 1600, tax: 0, currency: CURRENCY }
+        fees: { visaFee: 3500, serviceFee: 1600, tax: 0, currency: CURRENCY }
       },
-      {
-        id: 'eg-evisa-multi',
-        label: 'E-visa · Multiple entry',
-        stayDuration: '30 days per visit',
-        validity: '6 months from issue',
-        entryType: 'Multiple',
-        processingTime: '5–8 working days',
-        fees: { visaFee: 5400, serviceFee: 1900, tax: 0, currency: CURRENCY }
-      }
     ]
   },
   georgia: {
